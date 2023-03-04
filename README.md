@@ -37,6 +37,40 @@ The dataset contains several missing values, which are represented by zeros. The
 [Stochastic gradient descent](https://towardsdatascience.com/stochastic-gradient-descent-clearly-explained-53d239905d31) (SGD) is a widely used optimization algorithm in machine learning that iteratively updates the model parameters based on the gradients of the loss function computed on a subset of the training data. Compared to batch gradient descent, which updates the model parameters after computing the gradients on the entire training set, SGD is more computationally efficient and can scale to very large datasets.<br>
 
 In this project, a logistic regression implementation using stochastic gradient descent is used to predict the probability of an individual developing type 2 diabetes based on several clinical and demographic features. By using SGD, the model can be trained efficiently on a large dataset and achieve good prediction accuracy with a relatively small number of epochs. The k-fold cross-validation technique is used to evaluate the performance of the model and prevent overfitting.<br>
+<br>
 
 
+## Results
 
+The logistic regression model using stochastic gradient descent was evaluated using k-fold cross-validation with k=5. The model achieved an average accuracy of 77.1% over the 5 folds, with a standard deviation of 2.5%. The model achieved an average AUC of 0.84 over the 5 folds, with a standard deviation of 0.03. The model achieved an average F1 score of 0.69 over the 5 folds, with a standard deviation of 0.04. The model achieved an average precision of 0.66 over the 5 folds, with a standard deviation of 0.04. The model achieved an average recall of 0.73 over the 5 folds, with a standard deviation of 0.04.<br>
+
+Overall, these metrics suggest that the logistic regression model using stochastic gradient descent is reasonably effective for predicting the probability of an individual developing type 2 diabetes based on several clinical and demographic features.<br>
+<br>
+
+
+## Project Dependencies
+- Python 3.x
+- Numpy
+- Matplotlib
+- Scikit-learn
+
+These dependencies are only used to find accuracy metrics and plot the ROC curve. The model can be trained and evaluated without these dependencies.<br>
+<br>
+
+## Installation
+
+Clone this repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/NickMezacapa/Diabetes-Detection-Logistic-Regression.git
+cd Diabetes-Detection-Logistic-Regression
+```
+<br>
+
+## Usage
+
+Execute the following command to train and evaluate the model:
+
+```bash
+python main.py
+```

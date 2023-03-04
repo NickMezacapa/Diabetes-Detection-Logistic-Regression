@@ -2,6 +2,9 @@ from csv import reader
 from math import sqrt, exp
 from random import randrange
 from random import seed
+from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_score
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 # creating a function to read in a CSV file and convert it to a list of lists
@@ -78,7 +81,7 @@ def evaluate_algorithm(dataset, algorithm, n_folds, *args):
     - scores (list): A list of accuracy scores for each fold.
     """
     folds = cross_validation_split(dataset, n_folds)
-    scores = list()
+    scores = {'accuracy': [], 'auc': [], 'f1': [], 'precision': [], 'recall': []}
     for fold in folds:
         train_set = list(folds)
         train_set.remove(fold)
@@ -88,10 +91,25 @@ def evaluate_algorithm(dataset, algorithm, n_folds, *args):
             row_copy = list(row)
             test_set.append(row_copy)
             row_copy[-1] = None
-        predicted = algorithm(train_set, test_set, *args)
+        predicted_probs = algorithm(train_set, test_set, *args)
+        predicted = [round(p) for p in predicted_probs]
         actual = [row[-1] for row in fold]
+        # will calculate accuracy, auc, f1, precision, and recall, then create a histogram of the predicted probabilities
         accuracy = accuracy_metric(actual, predicted)
-        scores.append(accuracy)
+        auc = roc_auc_score(actual, predicted_probs)
+        f1 = f1_score(actual, predicted)
+        precision = precision_score(actual, predicted)
+        recall = recall_score(actual, predicted)
+        scores['accuracy'].append(accuracy)
+        scores['auc'].append(auc)
+        scores['f1'].append(f1)
+        scores['precision'].append(precision)
+        scores['recall'].append(recall)
+        plt.hist(predicted_probs, bins=10)
+        plt.title('Probability Scores Histogram')
+        plt.xlabel('Probability Score')
+        plt.ylabel('Frequency')
+        plt.show()
     return scores
 
 
